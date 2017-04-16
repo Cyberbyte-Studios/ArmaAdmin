@@ -54,6 +54,7 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     'armaadmin.users.apps.UsersConfig',
     'armaadmin.armalife.apps.ArmalifeConfig',
+    'armaadmin.dowloads.apps.DownloadsConfig',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -97,7 +98,7 @@ MANAGERS = ADMINS
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#databases
 DATABASES = {
     'default': env.db('DATABASE_URL', default='postgres:///armaadmin'),
-    'armalife': env.db('ARMALIFE_DATABASE_URL', default='mysql://armalife:armalife@172.28.0.3:3306/armalife'),
+    'armalife': env.db('ARMALIFE_DATABASE_URL', default='mysql://armalife:armalife@mariadb:3306/armalife'),
 }
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 
