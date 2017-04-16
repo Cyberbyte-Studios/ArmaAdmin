@@ -47,10 +47,8 @@ redis>=2.10.5
 celery==4.0.2
 
 
-
 rcssmin==1.0.6
 django-compressor==2.1.1
 
-
-# Your custom requirements go here
+mysqlclient
 djangorestframework

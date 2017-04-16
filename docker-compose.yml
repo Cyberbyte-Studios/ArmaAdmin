@@ -12,6 +12,14 @@ services:
       - postgres_backup:/backups
     env_file: .env
 
+  mariadb:
+    image: mariadb
+    environment:
+      MYSQL_DATABASE: "armalife"
+      MYSQL_USER: "armalife"
+      MYSQL_PASSWORD: "armalife"
+      MYSQL_ROOT_PASSWORD: "armalife"
+
   django:
     build:
       context: .
