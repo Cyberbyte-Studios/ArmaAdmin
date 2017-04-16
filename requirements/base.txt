@@ -54,3 +54,6 @@ mysqlclient
 djangorestframework
 xxhash
 humanize
+coreapi
+pygments
+markdown

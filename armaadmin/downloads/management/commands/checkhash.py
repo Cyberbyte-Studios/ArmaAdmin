@@ -15,9 +15,10 @@ class Command(BaseCommand):
         start = time.time()
         do_magic()
         end = time.time()
+        total_size = File.objects.aggregate(Sum('size'))['size__sum'] or 0
         self.stdout.write(self.style.SUCCESS(
             '{files} files added in {time}. Total file size {size}'.format(
-                size=humanize.naturalsize(File.objects.aggregate(Sum('size'))['size__sum']),
+                size=humanize.naturalsize(total_size),
                 files=File.objects.all().count(),
                 time=end - start
             )
