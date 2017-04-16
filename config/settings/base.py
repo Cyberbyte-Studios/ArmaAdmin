@@ -53,8 +53,8 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     'armaadmin.users.apps.UsersConfig',
-    'armaadmin.armalife.apps.ArmalifeConfig',
-    'armaadmin.dowloads.apps.DownloadsConfig',
+    'armaadmin.armalife',
+    'armaadmin.downloads',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

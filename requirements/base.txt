@@ -52,3 +52,5 @@ django-compressor==2.1.1
 
 mysqlclient
 djangorestframework
+xxhash
+humanize
