@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class Players(models.Model):
+class Player(models.Model):
     uid = models.AutoField(primary_key=True)
     name = models.CharField(max_length=32)
     aliases = models.TextField()
@@ -34,7 +34,7 @@ class Players(models.Model):
         db_table = 'players'
 
 
-class Containers(models.Model):
+class Container(models.Model):
     id = models.AutoField(primary_key=True)
     pid = models.CharField(max_length=17)
     classname = models.CharField(db_column='classname', max_length=32)
@@ -52,7 +52,7 @@ class Containers(models.Model):
         unique_together = (('id', 'pid'),)
 
 
-class Gangs(models.Model):
+class Gang(models.Model):
     owner = models.CharField(max_length=32, blank=True, null=True)
     name = models.CharField(unique=True, max_length=32, blank=True, null=True)
     members = models.TextField(blank=True, null=True)
@@ -66,7 +66,7 @@ class Gangs(models.Model):
         db_table = 'gangs'
 
 
-class Houses(models.Model):
+class House(models.Model):
     id = models.AutoField(primary_key=True)
     pid = models.CharField(max_length=17)
     pos = models.CharField(max_length=64, blank=True, null=True)
@@ -80,7 +80,7 @@ class Houses(models.Model):
         unique_together = (('id', 'pid'),)
 
 
-class Vehicles(models.Model):
+class Vehicle(models.Model):
     side = models.CharField(max_length=16)
     name = models.CharField(db_column='classname', max_length=64)
     type = models.CharField(max_length=16)
