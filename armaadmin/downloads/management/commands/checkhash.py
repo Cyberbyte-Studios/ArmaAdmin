@@ -1,25 +1,28 @@
-import time
 import humanize
 
 from django.core.management.base import BaseCommand
-from django.db.models import Sum
 
-from armaadmin.downloads.helper import do_magic
-from armaadmin.downloads.models import File
+from armaadmin.downloads.helper import start
 
 
 class Command(BaseCommand):
     help = 'Generates hashes for all files'
 
     def handle(self, *args, **options):
-        start = time.time()
-        do_magic()
-        end = time.time()
-        total_size = File.objects.aggregate(Sum('size'))['size__sum'] or 0
-        self.stdout.write(self.style.SUCCESS(
-            '{files} files added in {time}. Total file size {size}'.format(
-                size=humanize.naturalsize(total_size),
-                files=File.objects.all().count(),
-                time=end - start
-            )
-        ))
+        job = start()
+        if job.finished:
+            self.stdout.write(self.style.SUCCESS(
+                'Job {id}: {started} Finished: {finished} Elapsed: {elapsed}. Total: {total} Created: {created} Updated: {updated} Deleted: {deleted}. New file size {size}'.format(
+                    id=job.id,
+                    started=job.started,
+                    finished=job.finished,
+                    elapsed=job.finished-job.started,
+                    total=job.total,
+                    created=job.created,
+                    updated=job.updated,
+                    deleted=job.deleted,
+                    size=humanize.naturalsize(job.size)
+                )
+            ))
+        else:
+            self.stdout.write(self.style.ERROR('Job {id} failed to finish'.format(id=job.id)))

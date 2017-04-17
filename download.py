@@ -3,12 +3,13 @@ import os
 import coreapi
 import requests
 import time
-
 import xxhash
+
+from multiprocessing.dummy import Pool as ThreadPool
 
 api = "http://localhost:8000/docs/"
 client = coreapi.Client()
-
+threads = 4
 
 def get_files():
     schema = client.get(api)
@@ -16,6 +17,28 @@ def get_files():
     print('API provided {count} files'.format(count=response['count']))
     return response['results']
 
+
+def download_file(file):
+    download(url=file['download'], path='/home/scollins/projects/armaadmin/files2'+file['relative_path'])
+
+def delete_file(path):
+    print('Removing %s' % path)
+    os.remove(path)
+    delete_folder(path)
+
+# def process_file(file):
+#     thing = folder_files.pop(file['relative_path'], None)
+#     if thing is None:
+#         print('Processing file {name}. Server hash: {server}({server_size}).'.format(name=file['filename'],
+#                                                                                      server=file['hash'],
+#                                                                                      server_size=file['size']))
+#     else:
+#         print(
+#             'Processing file {name}. Server hash: {server}({server_size}). Filesystem hash {file}({file_size})'.format(
+#                 name=file['filename'], server=file['hash'], file=hash_file(thing), server_size=file['size'],
+#                 file_size=os.stat(thing).st_size))
+#     if thing is None or file['hash'] != hash_file(thing):
+#         return file
 
 def download(url, path):
     print('Downloading from %s' % url)
@@ -76,13 +99,16 @@ def main():
 
     print('Update {count} files: {files}'.format(count=len(download_files), files=download_files))
     print('Delete {count} files: {files}'.format(count=len(folder_files), files=folder_files))
-    for file in download_files:
-        download(url=file['download'], path=folder+file['relative_path'])
 
-    for filename, path in folder_files.items():
-        print('Removing %s' % path)
-        os.remove(path)
-        delete_folder(path)
+    download_pool = ThreadPool(threads)
+    download_pool.map(download_file, download_files)
+    download_pool.close()
+    download_pool.join()
+
+    delete_pool = ThreadPool(threads)
+    delete_pool.map(delete_file, folder_files.items())
+    delete_pool.close()
+    delete_pool.join()
 
 
 if __name__ == "__main__":
