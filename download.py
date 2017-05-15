@@ -64,7 +64,7 @@ def main():
     download_files = []
 
     folder = '/home/scollins/projects/armaadmin/files2'
-    folder_files = {}
+    folder_files = {} #should this be an array
     base_folder_length = len(folder)
 
     for root, directories, filenames in os.walk(folder):

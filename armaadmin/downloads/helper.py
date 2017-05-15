@@ -9,12 +9,6 @@ from django.utils.encoding import filepath_to_uri
 
 from armaadmin.downloads.models import File, FileSync
 
-
-# import logging
-# l = logging.getLogger('django.db.backends')
-# l.setLevel(logging.DEBUG)
-# l.addHandler(logging.StreamHandler())
-
 def start(path='', user=None):
     path = '/app/armaadmin/static/files'
     job = FileSync(user=user)
