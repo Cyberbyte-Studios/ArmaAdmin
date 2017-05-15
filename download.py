@@ -22,23 +22,10 @@ def download_file(file):
     download(url=file['download'], path='/home/scollins/projects/armaadmin/files2'+file['relative_path'])
 
 def delete_file(path):
-    print('Removing %s' % path)
-    os.remove(path)
-    delete_folder(path)
-
-# def process_file(file):
-#     thing = folder_files.pop(file['relative_path'], None)
-#     if thing is None:
-#         print('Processing file {name}. Server hash: {server}({server_size}).'.format(name=file['filename'],
-#                                                                                      server=file['hash'],
-#                                                                                      server_size=file['size']))
-#     else:
-#         print(
-#             'Processing file {name}. Server hash: {server}({server_size}). Filesystem hash {file}({file_size})'.format(
-#                 name=file['filename'], server=file['hash'], file=hash_file(thing), server_size=file['size'],
-#                 file_size=os.stat(thing).st_size))
-#     if thing is None or file['hash'] != hash_file(thing):
-#         return file
+    relative_path, full_path = path
+    print('Removing %s' % full_path)
+    os.remove(full_path)
+    delete_folder(full_path)
 
 def download(url, path):
     print('Downloading from %s' % url)
@@ -85,17 +72,10 @@ def main():
             path = os.path.join(root, filename)
             folder_files[path[base_folder_length:]] = path
 
-    if len(folder_files) > 0:
-        for file in files:
-            thing = folder_files.pop(file['relative_path'], None)
-            if thing is None:
-                print('Processing file {name}. Server hash: {server}({server_size}).'.format(name=file['filename'], server=file['hash'], server_size=file['size']))
-            else:
-                print('Processing file {name}. Server hash: {server}({server_size}). Filesystem hash {file}({file_size})'.format(name=file['filename'], server=file['hash'], file=hash_file(thing), server_size=file['size'], file_size=os.stat(thing).st_size))
-            if thing is None or file['hash'] != hash_file(thing):
-                download_files.append(file)
-    else:
-        print('No files exist')
+    for file in files:
+        thing = folder_files.pop(file['relative_path'], None)
+        if thing is None or file['hash'] != hash_file(thing):
+            download_files.append(file)
 
     print('Update {count} files: {files}'.format(count=len(download_files), files=download_files))
     print('Delete {count} files: {files}'.format(count=len(folder_files), files=folder_files))
