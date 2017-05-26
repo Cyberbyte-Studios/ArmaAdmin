@@ -91,7 +91,7 @@ def filesize(path):
 
 
 def hash_file(path, block_size=256 * 128):
-    hasher = xxhash.xxh32()
+    hasher = xxhash.xxh64()
     with open(path, 'rb') as file:
         while True:
             buf = file.read(block_size)
