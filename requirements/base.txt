@@ -57,3 +57,5 @@ humanize
 coreapi
 pygments
 markdown
+django-versionfield2
+draceditor

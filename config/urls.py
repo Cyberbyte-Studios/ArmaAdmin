@@ -32,7 +32,8 @@ urlpatterns = [
     # Your stuff: custom urls includes go here
     url(r'^api/v1/', include(router.urls, namespace='v1')),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    url(r'^docs/', include_docs_urls(title='Arma Admin API'))
+    url(r'^docs/', include_docs_urls(title='Arma Admin API')),
+    url(r'^draceditor/', include('draceditor.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:

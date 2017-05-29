@@ -7,6 +7,6 @@ from armaadmin.downloads.serializers import FileSerializer
 class FileViewSet(viewsets.ModelViewSet):
     queryset = File.objects.all()
     serializer_class = FileSerializer
-    search_fields = ('id', 'filename', 'size', 'relative_path', 'hash', 'download', 'created')
-    ordering_fields = ('id', 'filename', 'size', 'relative_path', 'hash', 'download', 'created')
-    filter_fields = ('id', 'filename', 'size', 'relative_path', 'hash', 'download', 'created')
+    search_fields = ('id', 'filename', 'size', 'relative_path', 'hash', 'download', 'created', 'branch')
+    ordering_fields = ('id', 'filename', 'size', 'relative_path', 'hash', 'download', 'created', 'branch')
+    filter_fields = ('id', 'filename', 'size', 'relative_path', 'hash', 'download', 'created', 'branch')

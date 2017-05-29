@@ -1,7 +1,11 @@
 from django.contrib import admin
 
-from armaadmin.downloads.models import File, FileSync
+from armaadmin.downloads.models import File, FileSync, Branch
 
+
+@admin.register(Branch)
+class BranchAdmin(admin.ModelAdmin):
+    fields = ('name', 'slug', 'description', 'groups')
 
 @admin.register(File)
 class FileAdmin(admin.ModelAdmin):
