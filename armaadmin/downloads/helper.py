@@ -98,4 +98,4 @@ def hash_file(path, block_size=256 * 128):
             if not buf:
                 break
             hasher.update(buf)
-    return hasher.intdigest()
+    return hasher.hexdigest()

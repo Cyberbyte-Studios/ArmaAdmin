@@ -24,7 +24,7 @@ class File(models.Model):
     size = models.BigIntegerField()
     full_path = models.CharField(max_length=255)
     relative_path = models.CharField(max_length=255)
-    hash = models.BigIntegerField()
+    hash = models.CharField(max_length=32)
     download = models.URLField()
     created = models.DateTimeField(default=now, editable=False)
     modified = models.DateTimeField(default=now, editable=False)
