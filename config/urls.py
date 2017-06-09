@@ -10,6 +10,7 @@ from django.views import defaults as default_views
 from rest_framework import routers
 from rest_framework.documentation import include_docs_urls
 from rest_framework.routers import DefaultRouter
+from rest_framework_jwt.views import obtain_jwt_token, verify_jwt_token
 
 from armaadmin.downloads.views import FileViewSet
 
@@ -32,6 +33,8 @@ urlpatterns = [
     # Your stuff: custom urls includes go here
     url(r'^api/v1/', include(router.urls, namespace='v1')),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^api-token-auth/', obtain_jwt_token),
+    url(r'^api-token-verify/', verify_jwt_token),
     url(r'^docs/', include_docs_urls(title='Arma Admin API')),
     url(r'^draceditor/', include('draceditor.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
